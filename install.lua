@@ -12,3 +12,10 @@ local modem = component.modem
 local running = true
 term.clear()
 
+function isquarry() -- Function for install main server quarry.
+    -- body
+end
+
+function ibquarry() -- Function for install robot quarry service.
+    -- body
+end
