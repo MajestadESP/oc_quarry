@@ -117,7 +117,7 @@ end
 
 -- readonly, takes the position of the waypoint, divides it by 16 to get chunk coords
 local anchorChunkPos = {
-    x = anchorPosition.x / 16
+    x = anchorPosition.x / 16,
     z = anchorPosition.z / 16
 }
 
