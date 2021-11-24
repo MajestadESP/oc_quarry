@@ -305,7 +305,7 @@ while true do
         os.sleep(1)
     until computer.energy() > computer.maxEnergy() * 0.9
     
-    local travelHeight = math.random(90, 110)
+    local travelHeight = math.random(100, 130)
     
     local chunk = getNewChunk() -- chunk.x, chunk.z
     local chunkCoords = {x=chunk.x, z=chunk.z}
@@ -370,7 +370,7 @@ while true do
         turnLeft()
         swingDown()
         down()
-    until curPos.y <= 9
+    until curPos.y <= 6
 
     moveTo(Pos.new(curPos.x, travelHeight, curPos.z))
     moveTo(Pos.new(homePos.x, travelHeight, homePos.z))
