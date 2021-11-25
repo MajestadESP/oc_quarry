@@ -62,15 +62,15 @@ if option == nil then
     print("Please type a proper option.")
     term.clear()
     goto OPTION
-elseif option == '0' then
+elseif option == 0 then
     print("Please type a proper option.")
     term.clear()
     goto OPTION
-elseif option == '1' then
+elseif option == 1 then
     isquarry()
-elseif option == '2' then
+elseif option == 2 then
     ibquarry()
-elseif option > '2' then
+elseif option > 2 then
     print("Please type a proper option.")
     term.clear()
     goto OPTION
