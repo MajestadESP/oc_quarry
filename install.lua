@@ -18,6 +18,8 @@ term.clear()
 local bin = '/bin'
 local lib = '/lib'
 
+local resolution = {gpu.getResolution()}
+
 function isquarry() -- Function for install main server quarry.
     print("Installing Server Quarry on your computer, please be patient.")
     shell.execute('wget -fq "https://github.com/MajestadESP/oc_quarry/blob/main/quarry/quarry.lua" "/bin"')
@@ -55,4 +57,19 @@ function ibquarry() -- Function for install robot quarry service.
     print("All is installed correctly.")
     os.sleep(1)
     term.clear()
+end
+
+local tblSelIns = ui.table.new(60, 10, 20, {
+    {text="",width=15}
+})
+collection:add(tblSelIns)
+
+collection:addRow(id, 'Quarry Server')
+collection:addRow(id, 'Quarry Client')
+
+local btnSetIns = ui.button.new(60,8,'Install')
+btnSetIns.onClick = function()
+    local row = SelIns:getSelected()
+    
+    SelIns:alterSelected(row)
 end
