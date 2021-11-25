@@ -10,10 +10,18 @@ local fs = require('filesystem')
 local component = require('component')
 local gpu = component.gpu
 local modem = component.modem
+local wget = fs.wg
 term.clear()
 
+local bin = '/bin'
+local lib = '/lib'
+
 do
-    cpu.getDeviceInfo()
+    if not fs.exists('/mnt') then
+        print("Please install OpenOS before install Quarry services")
+        os.sleep(5)
+        os.exit()
+    end
 end
 
 function isquarry() -- Function for install main server quarry.
