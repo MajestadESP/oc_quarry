@@ -1,20 +1,3 @@
-local GetFileContents = require('GetFileContents')
-local FilePutContents = require('FilePutContents')
-local cpu = require('computer')
-local ui = require('UI')
-local split = require('split')
-local serialization = require('serialization')
-local term = require('term')
-local shell = require('shell')
-local event = require('event')
-local fs = require('filesystem')
-local component = require('component')
-local www = require('internet')
-local gpu = component.gpu
-local modem = component.modem
-
-term.clear()
-
 do
     shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/Position.lua" "/lib"')
     shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/AcceptableInput.lua" "/lib"')
@@ -35,6 +18,23 @@ do
     shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/TextInputElement.lua" "/lib/UI"')
     os.sleep(5)
 end
+
+local GetFileContents = require('GetFileContents')
+local FilePutContents = require('FilePutContents')
+local cpu = require('computer')
+local ui = require('UI')
+local split = require('split')
+local serialization = require('serialization')
+local term = require('term')
+local shell = require('shell')
+local event = require('event')
+local fs = require('filesystem')
+local component = require('component')
+local www = require('internet')
+local gpu = component.gpu
+local modem = component.modem
+
+term.clear()
 
 local bin = '/bin'
 local lib = '/lib'
