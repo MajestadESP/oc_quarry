@@ -12,8 +12,9 @@ local component = require('component')
 local www = require('internet')
 local gpu = component.gpu
 local modem = component.modem
-local wget = fs.wg
+
 term.clear()
+
 do
     shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/Position.lua" "/lib"')
     shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/AcceptableInput.lua" "/lib"')
