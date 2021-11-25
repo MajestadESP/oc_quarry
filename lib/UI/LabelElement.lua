@@ -20,8 +20,8 @@ LabelElement.new = function(x,y,label,backgroundColor)
         gpu.fill(this.x, this.y, this.width, 1, ' ')
         
         if this.centerLabel then
-            local halfLengthOfText = #this.text // 2
-            local centerOfButton = this.x + this.width // 2
+            local halfLengthOfText = math.floor(#this.text / 2)
+            local centerOfButton = math.floor(this.x + this.width / 2)
             
             gpu.set(centerOfButton - halfLengthOfText, this.y, this.text)
         else

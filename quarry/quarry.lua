@@ -117,8 +117,8 @@ end
 
 -- readonly, takes the position of the waypoint, divides it by 16 to get chunk coords
 local anchorChunkPos = {
-    x = anchorPosition.x / 16,
-    z = anchorPosition.z / 16
+    x = math.floor(anchorPosition.x / 16),
+    z = math.floor(anchorPosition.z / 16)
 }
 
 -- keeps track of the map offset
