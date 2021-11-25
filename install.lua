@@ -1,49 +1,33 @@
-do
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/Position.lua" "/lib"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/AcceptableInput.lua" "/lib"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/CheckBounds.lua" "/lib"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/ChunkData.lua" "/lib"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/ChunkDataCollection.lua" "/lib"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/FilePutContents.lua" "/lib"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/GetFileContents.lua" "/lib"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI.lua" "/lib"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/split.lua" "/lib"')
-    os.sleep(1)
-    fs.makeDirectory("/lib/UI")
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/ButtonElement.lua" "/lib/UI"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/CellMap.lua" "/lib/UI"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/ElementCollection.lua" "/lib/UI"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/LabelElement.lua" "/lib/UI"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/TableElement.lua" "/lib/UI"')
-    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/TextInputElement.lua" "/lib/UI"')
-    os.sleep(5)
-end
-
-local GetFileContents = require('GetFileContents')
-local FilePutContents = require('FilePutContents')
-local cpu = require('computer')
-local ui = require('UI')
-local split = require('split')
-local serialization = require('serialization')
 local term = require('term')
 local shell = require('shell')
-local event = require('event')
 local fs = require('filesystem')
 local component = require('component')
-local www = require('internet')
-local gpu = component.gpu
-local modem = component.modem
 
 term.clear()
 
-local bin = '/bin'
-local lib = '/lib'
-
-local resolution = {gpu.getResolution()}
+local option = nil
 
 function isquarry() -- Function for install main server quarry.
+    term.clear()
     print("Installing Server Quarry on your computer, please be patient.")
     shell.execute('wget -fq "https://github.com/MajestadESP/oc_quarry/blob/main/quarry/quarry.lua" "/bin"')
+    os.sleep(5)
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/AcceptableInput.lua" "/lib/AcceptableInput.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/CheckBounds.lua" "/lib/CheckBounds.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/ChunkData.lua" "/lib/ChunkData.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/ChunkDataCollection.lua" "/lib/ChunkDataCollection.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/FilePutContents.lua" "/lib/FilePutContents.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/GetFileContents.lua" "/lib/GetFileContents.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI.lua" "/lib/UI.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/split.lua" "/lib/split.lua"')
+    os.sleep(1)
+    fs.makeDirectory("/lib/UI")
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/ButtonElement.lua" "/lib/UI/ButtonElement.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/CellMap.lua" "/lib/UI/CellMap.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/ElementCollection.lua" "/lib/UI/ElementCollection.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/LabelElement.lua" "/lib/UI/LabelElement.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/TableElement.lua" "/lib/UI/TableElement.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/UI/TextInputElement.lua" "/lib/UI/TextInputElement.lua"')
     os.sleep(5)
     print("All is installed correctly.")
     os.sleep(1)
@@ -51,25 +35,42 @@ function isquarry() -- Function for install main server quarry.
 end
 
 function ibquarry() -- Function for install robot quarry service.
+    term.clear()
     print("Installing Client Quarry on your robot, please be patient.")
     shell.execute('wget -fq "https://github.com/MajestadESP/oc_quarry/blob/main/quarry/botQuarry.lua" "/bin"')
     os.sleep(5)
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/Position.lua" "/lib/Position.lua"')
     print("All is installed correctly.")
     os.sleep(1)
     term.clear()
 end
 
-local tblSelIns = ui.table.new(60, 10, 20, {
-    {text="",width=15}
-})
-collection:add(tblSelIns)
-
-collection:addRow(id, 'Quarry Server')
-collection:addRow(id, 'Quarry Client')
-
-local btnSetIns = ui.button.new(60,8,'Install')
-btnSetIns.onClick = function()
-    local row = SelIns:getSelected()
-    
-    SelIns:alterSelected(row)
+print("Welcome to Quarry Services installer.")
+::OPTION::
+print("Please select one option to install:")
+print("")
+print("")
+print("1) Install Quarry Server, only for computers.")
+print("2) Install Quarry Client, only for robots.")
+print("")
+print("Choose an option:")
+term.read(option)
+if option == nil then
+    print("Please type a proper option.")
+    term.clear()
+    goto OPTION
+elseif option == 0 then
+    print("Please type a proper option.")
+    term.clear()
+    goto OPTION
+elseif option == 1 then
+    isquarry()
+elseif option == 2 then
+    ibquarry()
+elseif option > 2 then
+    print("Please type a proper option.")
+    term.clear()
+    goto OPTION
 end
+
+term.clear()
