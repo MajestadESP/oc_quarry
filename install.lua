@@ -56,21 +56,21 @@ print("")
 print("Choose an option:")
 
 local option = term.read()
-local option = tonumber(option)
+local num = tonumber(option)
 
-if option == nil then
+if num == nil then
     print("Please type a proper option.")
     term.clear()
     goto OPTION
-elseif option == 0 then
+elseif num == 0 then
     print("Please type a proper option.")
     term.clear()
     goto OPTION
-elseif option == 1 then
+elseif num == 1 then
     isquarry()
-elseif option == 2 then
+elseif num == 2 then
     ibquarry()
-elseif option > 2 then
+elseif num > 2 then
     print("Please type a proper option.")
     term.clear()
     goto OPTION
