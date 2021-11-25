@@ -5,7 +5,8 @@ local component = require('component')
 
 term.clear()
 
-local option = nil
+local option
+local num
 
 function isquarry() -- Function for install main server quarry.
     term.clear()
@@ -55,8 +56,8 @@ print("2) Install Quarry Client, only for robots.")
 print("")
 print("Choose an option:")
 
-local option = term.read()
-local num = tonumber(option)
+option = term.read()
+num = tonumber(option)
 
 if num == nil then
     print("Please type a proper option.")
