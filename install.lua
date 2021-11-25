@@ -54,7 +54,7 @@ print("1) Install Quarry Server, only for computers.")
 print("2) Install Quarry Client, only for robots.")
 print("")
 print("Choose an option:")
-term.read(option)
+local option = term.read()
 if option == nil then
     print("Please type a proper option.")
     term.clear()
