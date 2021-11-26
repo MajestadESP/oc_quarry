@@ -61,10 +61,12 @@ num = tonumber(option)
 
 if num == nil then
     print("Please type a proper option.")
+    os.sleep(5)
     term.clear()
     goto OPTION
 elseif num == 0 then
     print("Please type a proper option.")
+    os.sleep(5)
     term.clear()
     goto OPTION
 elseif num == 1 then
@@ -73,6 +75,7 @@ elseif num == 2 then
     ibquarry()
 elseif num > 2 then
     print("Please type a proper option.")
+    os.sleep(5)
     term.clear()
     goto OPTION
 end
