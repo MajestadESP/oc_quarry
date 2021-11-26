@@ -11,7 +11,7 @@ local num
 function isquarry() -- Function for install main server quarry.
     term.clear()
     print("Installing Server Quarry on your computer, please be patient.")
-    shell.execute('wget -fq "https://github.com/MajestadESP/oc_quarry/blob/main/quarry/quarry.lua" "/bin/quarry.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/quarry/quarry.lua" "/bin/quarry.lua"')
     os.sleep(5)
     shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/AcceptableInput.lua" "/lib/AcceptableInput.lua"')
     shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/CheckBounds.lua" "/lib/CheckBounds.lua"')
@@ -38,7 +38,7 @@ end
 function ibquarry() -- Function for install robot quarry service.
     term.clear()
     print("Installing Client Quarry on your robot, please be patient.")
-    shell.execute('wget -fq "https://github.com/MajestadESP/oc_quarry/blob/main/quarry/botQuarry.lua" "/bin/botQuarry.lua"')
+    shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/quarry/botQuarry.lua" "/bin/botQuarry.lua"')
     os.sleep(5)
     shell.execute('wget -fq "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/Position.lua" "/lib/Position.lua"')
     print("All is installed correctly.")

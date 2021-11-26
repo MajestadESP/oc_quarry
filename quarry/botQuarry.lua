@@ -16,7 +16,7 @@ local math = require('math')
 -- ######## CONFIG ########
 
 local port = 57812
-local depth = 3
+local depth = 2
 
 -- ########################
 
