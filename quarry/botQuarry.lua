@@ -13,8 +13,14 @@ local os = require('os')
 local computer = require('computer')
 local math = require('math')
 
-local modem = component.modem
+-- ######## CONFIG ########
+
 local port = 57812
+local depth = 3
+
+-- ########################
+
+local modem = component.modem
 modem.open(port)
 
 local stopCurrentChunk = false
@@ -370,7 +376,7 @@ while true do
         turnLeft()
         swingDown()
         down()
-    until curPos.y <= 6
+    until curPos.y <= depth
 
     moveTo(Pos.new(curPos.x, travelHeight, curPos.z))
     moveTo(Pos.new(homePos.x, travelHeight, homePos.z))

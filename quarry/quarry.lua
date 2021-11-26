@@ -22,9 +22,13 @@ do
         fs.makeDirectory(directory)
     end
 end
+-- ######## CONFIG ########
+
+local port = 57812
+
+-- ########################
 
 local resolution = {gpu.getResolution()}
-local port = 57812
 modem.open(port)
 
 local anchorPosition = {}
