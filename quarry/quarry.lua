@@ -170,7 +170,7 @@ local chunkCollection = ChunkDataCollection.new()
 local robotRegistry = serialization.unserialize(GetFileContents(directory .. 'robotRegistry.txt'))
 
 -- table for displaying robot status
-local tblRobotStatus = ui.table.new(60, 10, 20, {
+local tblRobotStatus = ui.table.new(60, 12, 20, {
     {text="Robot",width=15},
     {text="Status",width=8},
     {text="Chunk ID",width=15}
@@ -196,6 +196,18 @@ do
     collection:add(txtNameInput)
     collection:add(btnSetName)
 end
+
+-- UI for delete registered robots
+--do
+--    local btnDel = ui.button.new(60,10,'Delete')
+--    btnDel.onClick = function()
+--        local row = tblRobotStatus:getSelected()
+--        
+--        tblRobotStatus:alterSelected(row)
+--    end
+--    
+--    collection:add(btnDel)
+--end
 
 function loadChunkFiles()
     -- all chunk data is stored within one file, store method could be changed to avoid expensive use of serialization which comes with a storage overhead
