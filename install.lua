@@ -11,9 +11,9 @@ local num
 function isquarry() -- Function for install main server quarry.
     term.clear()
     print("Installing Server Quarry on your computer, please be patient.")
-    shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/quarry/quarry.lua" "/bin/quarry.lua"')
+    shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/quarry/quarry.lua" "/bin/quarry.lua"') -- Download and install the main program
     os.sleep(5)
-    shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/AcceptableInput.lua" "/lib/AcceptableInput.lua"')
+    shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/AcceptableInput.lua" "/lib/AcceptableInput.lua"') -- Download and install API's and lib's
     shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/CheckBounds.lua" "/lib/CheckBounds.lua"')
     shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/ChunkData.lua" "/lib/ChunkData.lua"')
     shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/ChunkDataCollection.lua" "/lib/ChunkDataCollection.lua"')
@@ -38,11 +38,11 @@ end
 function ibquarry() -- Function for install robot quarry service.
     term.clear()
     print("Installing Client Quarry on your robot, please be patient.")
-    shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/quarry/botQuarry.lua" "/bin/botQuarry.lua"')
+    shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/quarry/botQuarry.lua" "/bin/botQuarry.lua"') -- Download and install the main program
     os.sleep(5)
-    shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/Position.lua" "/lib/Position.lua"')
+    shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/Position.lua" "/lib/Position.lua"') -- Download and install API's and lib's
     os.sleep(1)
-    shell.execute('rc botQuarry.lua enable')
+    shell.execute('rc botQuarry.lua enable') -- Add the main program to autostart list
     os.sleep(1)
     print("All is installed correctly.")
     os.sleep(1)
