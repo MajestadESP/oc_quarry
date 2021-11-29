@@ -14,8 +14,8 @@ ChunkData.new = function(x,z,state)
     
     this.getSouthWestCorner = function(this)        
         return {
-            x = this.x * 16,
-            z = (this.z * 16) + 15
+            x = math.floor(this.x * 16),
+            z = math.floor((this.z * 16) + 15)
         }
     end
     
