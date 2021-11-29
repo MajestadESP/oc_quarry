@@ -43,7 +43,7 @@ function ibquarry() -- Function for install robot quarry service.
     shell.execute('wget "https://raw.githubusercontent.com/MajestadESP/oc_quarry/main/lib/Position.lua" "/lib/Position.lua"') -- Download and install API's and lib's
     os.sleep(1)
     local file = io.open("/home/.shrc", 'w')
-    file:write("botQuarry")
+    file:write("/bin/botQuarry")
     file:close()
     os.sleep(1)
     print("All is installed correctly.")
