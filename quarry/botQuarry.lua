@@ -315,7 +315,7 @@ while true do
     
     local chunk = getNewChunk() -- chunk.x, chunk.z
     local chunkCoords = {x=chunk.x, z=chunk.z}
-    chunk.x = chunk.x * 16 --+ 1 -- convert coordinates from chunk to block
+    chunk.x = chunk.x * 16 -- convert coordinates from chunk to block
     chunk.z = (chunk.z+1) * 16 - 1
     
     print('Start position: ' .. serialization.serialize(chunk))
