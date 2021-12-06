@@ -1,8 +1,3 @@
--- to install on robot
--- 1. copy Position to home
--- 2. copy this file to home
-
-
 local rb = require('robot')
 local component = require('component')
 local navigation = component.navigation
