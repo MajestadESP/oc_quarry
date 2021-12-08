@@ -11,7 +11,6 @@ local fs = require('filesystem')
 local component = require('component')
 local gpu = component.gpu
 local modem = component.modem
--- local tunnel = component.tunnel
 local running = true
 term.clear()
 
