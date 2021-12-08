@@ -88,17 +88,17 @@ local homePos = clonePosition(curPos)
 
 -- ########################## --
 
---local component = require('component') -- подгрузить обертку из OpenOS
+--local component = require('component') -- contenedor de carga de OpenOS
 --local computer = require('computer')
-local chunks = 9 -- количество чанков для добычи
-local min, max = 2.2, 40 -- минимальная и максимальная плотность
-local port = 1 -- порт для взаимодействия с роботом
-local X, Y, Z, D, border = 0, 0, 0, 0 -- переменные локальной системы координат
+local chunks = 9 -- la cantidad de trozos para minar
+local min, max = 2.2, 40 -- densidad mínima y máxima
+local port = 1 -- puerto para la interacción con el robot
+local X, Y, Z, D, border = 0, 0, 0, 0 -- variables del sistema de coordenadas locales
 local steps, turns = 0, 0 -- debug
-local WORLD = {x = {}, y = {}, z = {}} -- таблица меток
-local E_C, W_R = 0, 0 -- энергозатраты на один шаг и скорость износа
+local WORLD = {x = {}, y = {}, z = {}} -- tabla de etiquetas
+local E_C, W_R = 0, 0 -- consumo de energía por paso y tasa de desgaste
 
-local function arr2a_arr(tbl) -- преобразование списка в ассоциативный массив
+local function arr2a_arr(tbl) -- convertir una lista en una matriz asociativa
   for i = #tbl, 1, -1 do
    tbl[tbl[i]], tbl[i] = true, nil
   end
@@ -113,14 +113,14 @@ arr2a_arr(wlist)
 arr2a_arr(fragments)
 arr2a_arr(tails)
 
-local function add_component(name) -- получение прокси компонента
-  name = component.list(name)() -- получить адрес по имени
-  if name then -- если есть адрес
-    return component.proxy(name) -- вернуть прокси
+local function add_component(name) -- obteniendo el componente proxy
+  name = component.list(name)() -- obtener dirección por nombre
+  if name then -- si hay una direccion
+    return component.proxy(name) -- proxy de retorno
   end
 end
 
--- загрузка компонентов --
+-- cargando componentes --
 local controller = add_component('inventory_controller')
 local chunkloader = add_component('chunkloader')
 local generator = add_component('generator')
@@ -143,63 +143,63 @@ sleep = function(timeout)
   until computer.uptime() >= deadline
 end
 
-report = function(message, stop) -- рапорт о состоянии
-  message = '|'..X..' '..Y..' '..Z..'|\n'..message..'\nenergy level: '..math.floor(energy_level()*100)..'%' -- добавить к сообщению координаты и уровень энергии
-  if modem then -- если есть модем
-    modem.broadcast(port, message) -- послать сообщение через модем
-  elseif tunnel then -- если есть связанная карта
-    tunnel.send(message) -- послать сообщение через нее
+report = function(message, stop) -- informe de estado
+  message = '|'..X..' '..Y..' '..Z..'|\n'..message..'\nenergy level: '..math.floor(energy_level()*100)..'%' -- agregar coordenadas y nivel de energía al mensaje
+  if modem then -- si tienes un modem
+    modem.broadcast(port, message) -- enviar mensaje a través de módem
+  elseif tunnel then -- si hay una tarjeta vinculada
+    tunnel.send(message) -- enviar un mensaje a través de él
   end
-  computer.beep() -- пикнуть
-  if stop then -- если есть флаг завершения
+  computer.beep() -- hacer un pío
+  if stop then -- si hay una bandera de finalización
     if chunkloader then
       chunkloader.setActive(false)
     end
-    error(message,0) -- остановить работу программы
+    error(message,0) -- detener el programa
   end
 end
 
-remove_point = function(point) -- удаление меток
-  table.remove(WORLD.x, point) -- удалить метку из таблицы
+remove_point = function(point) -- eliminar marcas
+  table.remove(WORLD.x, point) -- quitar etiqueta de la mesa
   table.remove(WORLD.y, point)
   table.remove(WORLD.z, point)
 end
 
-check = function(forcibly) -- проверка инструмента, батареи, удаление меток
-  if not ignore_check and (steps%32 == 0 or forcibly) then -- если пройдено 32 шага или включен принудительный режим
+check = function(forcibly) -- herramienta de comprobación, batería, eliminación de marcas
+  if not ignore_check and (steps%32 == 0 or forcibly) then -- si se han superado 32 pasos o el modo forzado está habilitado
     inv_check()
-    local delta = math.abs(X)+math.abs(Y)+math.abs(Z)+64 -- определить расстояние
-    if robot.durability()/W_R < delta then -- если инструмент изношен
+    local delta = math.abs(X)+math.abs(Y)+math.abs(Z)+64 -- determinar la distancia
+    if robot.durability()/W_R < delta then -- si la herramienta está gastada
       report('tool is worn')
       ignore_check = true
-      home(true) -- отправиться домой
+      home(true) -- Vete a casa
     end
-    if delta*E_C > computer.energy() then -- проверка уровня энергии
+    if delta*E_C > computer.energy() then -- control del nivel de energía 
       report('battery is low')
       ignore_check = true
-      home(true) -- отправиться домой
+      home(true) -- Vete a casa 
     end
-    if energy_level() < 0.3 then -- если энергии меньше 30%
+    if energy_level() < 0.3 then -- si la energía es inferior al 30% 
       local time = os.date('*t')
-      if generator and generator.count() == 0 and not forcibly then -- если есть генератор
+      if generator and generator.count() == 0 and not forcibly then -- si hay un generador 
         report('refueling solid fuel generators')
-        for slot = 1, inventory do -- обойти инвентарь
-          robot.select(slot) -- выбрать слот
-          for gen in component.list('generator') do -- перебрать все генераторы
-            if component.proxy(gen).insert() then -- попробовать заправиться
+        for slot = 1, inventory do -- omitir inventario 
+          robot.select(slot) -- seleccionar ranura 
+          for gen in component.list('generator') do -- iterar sobre todos los generadores 
+            if component.proxy(gen).insert() then -- tratar de repostar 
               break
             end
           end
         end
-      elseif solar and geolyzer.isSunVisible() and -- проверить видимость солнца
-        (time.hour > 4 and time.hour < 17) then -- проверить время
-        while not geolyzer.canSeeSky() do -- пока не видно неба
-          step(1, true) -- сделать шаг вверх без проверки
+      elseif solar and geolyzer.isSunVisible() and -- comprobar la visibilidad del sol 
+        (time.hour > 4 and time.hour < 17) then -- hora de revision 
+        while not geolyzer.canSeeSky() do -- hasta que el cielo sea visible
+          step(1, true) -- dar un paso hacia arriba sin comprobar 
         end
         report('recharging in the sun')
         sorter(true)
         while (energy_level() < 0.98) and geolyzer.isSunVisible() do
-          time = os.date('*t') -- время работы солнечной панели 05:30 - 18:30
+          time = os.date('*t') -- Horas de trabajo del panel solar 05:30 - 18:30 
           if time.hour >= 5 and time.hour < 19 then
             sleep(60)
           else
@@ -210,16 +210,16 @@ check = function(forcibly) -- проверка инструмента, бата�
       end
     end
   end
-  if #WORLD.x ~= 0 then -- если таблица меток не пуста
-    for i = 1, #WORLD.x do -- пройти по всем позициям
+  if #WORLD.x ~= 0 then -- si la tabla de etiquetas no está vacía 
+    for i = 1, #WORLD.x do -- pasar por todas las posiciones 
       if WORLD.y[i] == Y and ((WORLD.x[i] == X and ((WORLD.z[i] == Z+1 and D == 0) or (WORLD.z[i] == Z-1 and D == 2))) or (WORLD.z[i] == Z and ((WORLD.x[i] == X+1 and D == 3) or (WORLD.x[i] == X-1 and D == 1)))) then
         robot.swing(3)
         remove_point(i)
       end
       if X == WORLD.x[i] and (Y-1 <= WORLD.y[i] and Y+1 >= WORLD.y[i]) and Z == WORLD.z[i] then
-        if WORLD.y[i] == Y+1 then -- добыть блок сверху, если есть
+        if WORLD.y[i] == Y+1 then -- conseguir un bloque de arriba, si lo hay 
           robot.swing(1)
-        elseif WORLD.y[i] == Y-1 then -- добыть блок снизу
+        elseif WORLD.y[i] == Y-1 then -- obtener el bloque de la parte inferior 
           robot.swing(0)
         end
         remove_point(i)
@@ -228,15 +228,15 @@ check = function(forcibly) -- проверка инструмента, бата�
   end
 end
 
-step = function(side, ignore) -- функция движения на 1 блок
+step = function(side, ignore) -- 1 función de movimiento de bloque 
   local result, obstacle = robot.swing(side) 
-  if not result and obstacle ~= 'air' and robot.detect(side) then -- если блок нельзя разрушить
-    home(true) -- запустить завершающую функцию
-    report('insurmountable obstacle', true) -- послать сообщение
+  if not result and obstacle ~= 'air' and robot.detect(side) then -- si el bloque no puede ser destruido 
+    home(true) -- ejecutar función de terminación 
+    report('insurmountable obstacle', true) -- enviar un mensaje 
   else
-    while robot.swing(side) do end -- копать пока возможно
+    while robot.swing(side) do end -- cavar mientras sea posible 
   end
-  if robot.move(side) then -- если робот сдвинулся, обновить координаты
+  if robot.move(side) then -- si el robot se ha movido, actualice las coordenadas
     steps = steps + 1 -- debug
     if side == 0 then
       Y = Y-1
@@ -259,9 +259,9 @@ step = function(side, ignore) -- функция движения на 1 блок
   end
 end
 
-turn = function(side) -- поворот в сторону
+turn = function(side) -- gira hacia un lado 
   side = side or false
-  if robot.turn(side) and D then -- если робот повернулся, обновить переменную  направления
+  if robot.turn(side) and D then -- si el robot gira, actualiza la variable de dirección 
     turns = turns+1 -- debug
     if side then
       D = (D+1)%4
@@ -272,13 +272,13 @@ turn = function(side) -- поворот в сторону
   end
 end
 
-smart_turn = function(side) -- поворот в определенную сторону света
+smart_turn = function(side) -- girar en cierta dirección del mundo 
   while D ~= side do
     turn((side-D)%4==1)
   end
 end
 
-go = function(x, y, z) -- переход по указанным координатам
+go = function(x, y, z) -- transición a coordenadas especificadas 
   if border and y < border then
     y = border
   end
@@ -307,10 +307,10 @@ go = function(x, y, z) -- переход по указанным координ�
   end
 end
 
-scan = function(xx, zz) -- сканирование квадрата x8 относительно робота
-  local raw, index = geolyzer.scan(xx, zz, -1, 8, 8, 1), 1 -- получить сырые данные, установить индекс в начало таблицы
-  for z = zz, zz+7 do -- развертка данных по z
-    for x = xx, xx+7 do -- развертка данных по х
+scan = function(xx, zz) -- escaneando el cuadrado x8 relativo al robot 
+  local raw, index = geolyzer.scan(xx, zz, -1, 8, 8, 1), 1 -- obtener datos sin procesar, establecer el índice al principio de la tabla 
+  for z = zz, zz+7 do -- barrido de datos z 
+    for x = xx, xx+7 do -- barrido de datos x
       if raw[index] >= min and raw[index] <= max then -- если обнаружен блок с подходящей плотностью
         table.insert(WORLD.x, X+x) --| записать метку в список
         table.insert(WORLD.y, Y-1) --| с коррекцией локальных
